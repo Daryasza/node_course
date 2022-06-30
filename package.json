@@ -8,7 +8,7 @@
   },
   "name": "node",
   "version": "1.0.0",
-  "description": "Console App for sorting files",
+  "description": "",
   "main": "index.js",
   "dependencies": {
     "ansi-regex": "^5.0.1",
