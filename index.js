@@ -1,7 +1,9 @@
 const yargs = require('yargs');
 const path = require('path');
 const fs = require('fs');
+
 const readdir = require('./readdir');
+const createFinalDirectory = require('./createFinalDirectory')
 
 const args = yargs
   .usage('Usage: $0 [options]')
@@ -35,17 +37,9 @@ const config = {
   isDelete: args.delete
 };
 
-fs.mkdir(config.dist, (err) => {
-  if (err) {
-    throw new Error(err)
-  }
-});
-
+createFinalDirectory(config.dist);
 readdir(config.entry, config.dist);
 
 if (config.isDelete) {
-  console.log('cocococco')
-  fs.rmdir(`${config.entry}`, { recursive: true}, () => {
-    console.log(config.entry, 'deleted');
-  })
-}
+  fs.rm(`${config.entry}`, { recursive: true}, () => true)
+};
