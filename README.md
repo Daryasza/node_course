@@ -1,7 +1,4 @@
-***A Node JS student project consisting of:***
-
-1. A console app organizing files into folders, two solutions: 1)based on callbacks, 2)async
-2. Website server side, two solutions: 1)using Express.js, 2)Koa.js
-3. Backend part for LoftSystem (https://github.com/satansdeer/loftschool-nodejs-project) 
-
-Every solution takes it's own branch named "week" numbered in ascending order according to the progress of accomplishment
+1. Server accessed with a GET request, initiates asynchronous operations:
+  1) Continuous output to the server console of the current date and time in UTC format at certain time intervals.
+  2) In specified time, stops the console output and completes response, returning the current date and time to the client.
+2. A console app organizing files into folders (async)
