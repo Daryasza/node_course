@@ -24,7 +24,7 @@ http.createServer(function (res, req) {
     }, process.env.END_TIMER_MS);
 
   } else {
-    req.end()
+    req.end();
   }
   
 }).listen(process.env.HTTP_SERVER_PORT);
