@@ -1,37 +1,34 @@
 {
-  "devDependencies": {
-    "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^8.18.0",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-n": "^15.2.3",
-    "eslint-plugin-promise": "^6.0.0"
-  },
-  "name": "node",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "dependencies": {
-    "luxon": "^3.0.1",
-    "yargs": "^17.5.1"
-  },
-  "scripts": {
-    "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Daryasza/Node_Course.git"
-  },
-  "author": "",
+  "name": "builder",
+  "version": "0.0.1",
+  "author": "krabaton",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Daryasza/Node_Course/issues"
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node app.js",
+    "start:dev": "cross-env NODE_ENV=development nodemon app.js",
+    "prettier": "prettier --write ./**/*.js",
+    "lint": " eslint **/*.{js,json}",
+    "lint:fix": "eslint --fix **/*.{js,json}"
   },
-  "homepage": "https://github.com/Daryasza/Node_Course#readme",
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
+  "devDependencies": {
+    "eslint": "^7.13.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-json": "^2.1.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.2.0"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.2",
+    "dotenv": "^16.0.1",
+    "express": "^4.17.1",
+    "formidable": "^2.0.1",
+    "http-errors": "^1.8.0",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.7.7",
+    "pug": "^3.0.0"
   }
 }
