@@ -12,48 +12,61 @@ class Database {
 
   async init() {
     const data = await fs.promises.readFile(dataJSONPath, 'utf8');
-
     this.DB = JSON.parse(data);
   }
 
-  close() {
-    this.DB = null;
+  updateChanges() {
+    fs.writeFile(dataJSONPath, JSON.stringify(this.DB), function (err) {
+      if (err) return console.log(err);
+    });
   }
 
   getDBProducts() {
     return new Promise((resolve) => 
       resolve(this.DB.products)
-    )
+    );
   }
 
   getDBSkills() {
     return new Promise((resolve) => 
       resolve(this.DB.skills)
-    )
+    );
   }
 
   updateDBSkill(params) {
-    const { age, concerts, cities, years } = params
+    const { age, concerts, cities, years } = params;
+    const skills = this.DB.skills;
+
+    const updateSkill = (skill, skillId) => {
+      skills.find(el => el.id === `${skillId}`).number = skill;
+    };
 
     return new Promise((resolve) => {
-      const skills = this.DB.skills;
+  
+      age && updateSkill(age, "age");
+      concerts && updateSkill(concerts, "concerts");
+      cities && updateSkill(cities, "cities");
+      years && updateSkill(years, "years");
 
-      skills.find(el => el.id === 'age').number = age
-      skills.find(el => el.id === 'concerts').number = concerts
-      skills.find(el => el.id === 'cities').number = cities
-      skills.find(el => el.id === 'years').number = years
+      this.updateChanges();
 
-      resolve()
+      resolve();
     })
   }
 
   addDBProduct(product) {
     return new Promise((resolve) => {
-      this.DB.products.push(product)
+      this.DB.products.push(product);
+      this.updateChanges();
 
-      resolve(product)
+      resolve(product);
     })
   }
+
+  close() {
+    this.DB = null;
+  }
 }
+
 
 exports.Database = new Database()

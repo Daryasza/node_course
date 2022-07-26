@@ -12,10 +12,17 @@ router.get('/', (req, res, next) => {
 router.post('/skills', async (req, res, next) => {
   try {
     await Database.updateDBSkill(req.body);
-    res.redirect('/');
+
+    res.render('pages/admin', {
+      msgskill: 'Счетчики успешно обновлены',
+    });
 
   } catch (error) {
-    console.error(error);
+    console.log(error);
+
+    res.render('pages/admin', {
+      msgskill: 'Произошла ошибка!',
+    });
   }
 })
 
@@ -24,7 +31,7 @@ router.post('/upload', (req, res, next) => {
   const upload = path.join('./public', 'upload');
 
   if (!fs.existsSync(upload)) {
-    fs.mkdirSync(upload)
+    fs.mkdirSync(upload);
   }
 
   form.uploadDir = path.join(process.cwd(), upload);
@@ -34,37 +41,46 @@ router.post('/upload', (req, res, next) => {
       return next(err);
     }
 
-    const validationResult = validation(fields, files);
+    const validationResult = validationForm(fields, files);
 
     if (validationResult.err) {
       fs.unlinkSync(files.photo.filepath);
 
       res.render('pages/admin', {
-        msgfile: 'validationResult.status',
+        msgfile: validationResult.status,
       });
     }
 
-    const fileName = path.join(upload, fields.name);
+    const fileName = path.join(upload, files.photo.originalFilename);
 
-    try {
-      await Database.addDBProduct({
-        src: fileName,
-        name: fields.name,
-        price: fields.price,
-      });
+    fs.rename(files.photo.filepath, fileName, async function (err) {
+      if (err) {
+        console.error(err.message);
+        return
+      }
 
-      res.render('pages/admin', {
-        msgfile: 'Картинка успешно загружена',
-      });
+      let dir = fileName.substring(fileName.indexOf('\\'));
 
-    } catch (err) {
-      console.error(err.message);
-      res.render('pages/admin', { msgfile: 'Ошибка при загрузке картинки' });
-    }
+      try {
+        await Database.addDBProduct({
+          src: dir,
+          name: fields.name,
+          price: fields.price,
+        });
+  
+        res.render('pages/admin', {
+          msgfile: 'Картинка успешно загружена',
+        });
+  
+      } catch (err) {
+        console.error(err.message);
+        res.render('pages/admin', { msgfile: 'Ошибка при загрузке картинки' });
+      }
+    })
   })
 })
 
-const validation = (fields, files) => {
+const validationForm = (fields, files) => {
   if (files.photo.size === 0) {
     return { status: 'Не загружена картинка!', err: true }
   } else if (!fields.name) {
@@ -72,7 +88,6 @@ const validation = (fields, files) => {
   } else if (!fields.price) {
     return { status: 'Не указана цена!', err: true }
   }
-
   return { status: 'Ok', err: false }
 }
 
