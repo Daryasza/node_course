@@ -30,7 +30,9 @@ exports.add = async (io, socket, data) => {
 
   try {
     io.to(socket.id).emit('message:add', messageRecord);
-    io.to(recipientSocketId).emit('message:add', messageRecord);
+    if (socket.id !== recipientSocketId)
+      io.to(recipientSocketId).emit('message:add', messageRecord);
+
   } catch(err) {
     console.error(err);
     socket.emit('error')
