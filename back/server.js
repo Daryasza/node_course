@@ -1,3 +1,4 @@
+const path = require('path');
 const cors = require('cors');
 const express = require('express');
 const socket = require('socket.io');
@@ -27,9 +28,14 @@ mongoose.connect(dbConfig.url, {
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.static('./public'));
 
 require('./routes/news.js')(app);
 require('./routes/user.js')(app);
+
+app.get("/*", (_, res) => {
+  res.sendFile(path.resolve(__dirname, './public', 'index.html'));
+})
 
 const server = app.listen(serverConfig.port, serverConfig.host, () => {
   console.log(`App listening on ${serverConfig.host}:${serverConfig.port}`)

@@ -61,7 +61,7 @@ export default combineReducers({
 
 export const connectSocket = () => (dispatch, getState) => {
   const userProfile = userProfileSelector(getState());
-  socket = socketIO('http://34.76.206.110:8080');
+  socket = socketIO('http://34.76.206.110');
 
   socket.emit('users:connect', { userId: userProfile.id, username: userProfile.username });
 
