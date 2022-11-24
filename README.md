@@ -21,4 +21,4 @@ $ npm i
 ```
 $ npm run start
 ```
-
+The website is located at `http://localhost:3000/`
