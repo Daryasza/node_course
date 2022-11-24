@@ -17,7 +17,7 @@ Server accessed with a GET request, initiates asynchronous operations:
  ```
  * run:
  ```
- node server.js
+ $ node server.js
  ```
 
 ## Part#2. Console sorting app
@@ -36,7 +36,7 @@ A console app organizing files into folders by the first letter in the file name
  ```
  * run:
  ```
-  node SortingAppAsync/index.js -e ./entryPath ./distPath(optional) -D true(optional)
+ $ node SortingAppAsync/index.js -e ./entryPath ./distPath(optional) -D true(optional)
  ```
 where 
 - `./entryPath` - is the folder needed to be sorted
