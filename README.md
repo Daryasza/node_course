@@ -12,7 +12,7 @@ A console app organizing files into folders by the first letter in the file name
     $ git checkout week1
 * run sorting app 
   ```
-  node index.js -e ./entryPath -d ./distPath(optional) -D true(optional)
+    $ node index.js -e ./entryPath -d ./distPath(optional) -D true(optional)
   ```
     where 
    - `./entryPath` - is the folder needed to be sorted
